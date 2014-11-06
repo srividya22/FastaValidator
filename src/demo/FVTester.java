@@ -17,65 +17,67 @@
 
 // If you have any questions, send an email to megx@mpi-bremen.de.
 
-
 import de.mpi_bremen.mgg.FastaValidator.*;
 
 class FVTester implements FastaValidatorCallback
 {
-	
-	public void header(String header)
-	{
-		System.out.println(header);
-	}
-	
-	public void commentline(String commentline)
-	{
-		System.out.println(commentline);
-	}
-	
-	public void seqline(String seqline)
-	{
-		System.out.println(seqline);
-	}
-	
-	public void eof()
-	{
-		System.out.println("end of file");
-	}
 
-	public static void main(String argv[]) throws Exception
-	{
-		if (argv.length == 0)
-		{
-			System.out.println("Usage : java FVTester <inputfile>");
-		}
-		else {
-			try
-			{
-				FastaValidator FV=new FastaValidator(new FVTester());
-				FV.setSequencetype(FastaValidator.Sequencetype.ALL);
-				FV.validate(argv[0]);
-			}
-			catch (java.io.IOException e) //io error
-			{
-				System.out.println("ERROR: "+e.getMessage());
-				e.printStackTrace();
-			} 
-			catch (InvalidCharacterException e) //invalid character(s) found in fasta file
-			{
-				System.out.println("ERROR: "+e.getMessage()+" (line: "+e.getLine()+", char: "+e.getCharacter()+")");
-			}
-			catch (FastaFormatException e) //file not in fasta format
-			{
-				System.out.println("ERROR: "+e.getMessage()+" (line: "+e.getLine()+")");
-			}
-			catch (FastaHandlingException e)//error from callback methods; thrown by user
-			{
-				System.out.println("ERROR: "+e.getMessage());
-			}
-		}
-		System.out.println("");
-	} //main
+        public void header(String header)
+        {
+        //      System.out.println(header);
+        }
+
+        public void commentline(String commentline)
+        {
+        //      System.out.println(commentline);
+        }
+
+        public void seqline(String seqline)
+        {
+        //      System.out.println(seqline);
+        }
+
+        public void eof()
+        {
+        //      System.out.println("end of file");
+        }
+        public static void main(String argv[]) throws Exception
+        {
+                //String val = null;    
+                if (argv.length == 0)
+                {
+                        System.out.println("Usage : java FVTester <inputfile>");
+                }
+                else {
+                        try
+                        {
+                                FastaValidator FV=new FastaValidator(new FVTester());
+                                FV.setSequencetype(FastaValidator.Sequencetype.ALL);
+                                FV.validate(argv[0]);
+                        }
+                        catch (java.io.IOException e) //io error
+                        {
+                                System.out.println("ERROR: "+e.getMessage());
+                                throw new Exception(e.getMessage());
+                        }
+                        catch (InvalidCharacterException e) //invalid character(s) found in fasta file
+                        {
+                                System.out.println("ERROR: "+e.getMessage()+" (line: "+e.getLine()+", char: "+e.getCharacter()+")");
+                                throw new Exception("ERROR at Line: "+e.getLine()+", char: "+e.getCharacter()+")");
+                        }
+                        catch (FastaFormatException e) //file not in fasta format
+                        {
+                                System.out.println("ERROR: "+e.getMessage()+" (line: "+e.getLine()+")");
+                                throw new Exception("ERROR: at Line: "+e.getLine()+")");
+                        }
+                        catch (FastaHandlingException e)//error from callback methods; thrown by user
+                        {
+                                System.out.println("ERROR: "+e.getMessage());
+                                throw new Exception(e.getMessage());
+                        }
+                }
+                //System.out.println("");
+        } //main
 
 }
 

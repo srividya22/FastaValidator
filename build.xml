@@ -90,7 +90,7 @@
 
     <target name="demo" depends="jar">
 	<mkdir dir="${build}/demo"/>
-        <javac source="${java_src_version}" target="${java_target_version}" destdir="${build}/demo" srcdir="${src}/demo"  includeantruntime="false" classpath="${dist}/FastaValidator-${version.num}.jar"
+        <javac source="${java_src_version}" target="${java_target_version}" destdir="${build}/classes" srcdir="${src}/demo"  includeantruntime="false" classpath="${dist}/FastaValidator-${version.num}.jar"
 	    includes="*.java">
 	</javac>
     </target>
